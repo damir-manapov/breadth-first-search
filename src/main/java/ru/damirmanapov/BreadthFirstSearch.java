@@ -1,63 +1,30 @@
 package ru.damirmanapov;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class BreadthFirstSearch {
 
 
     public static List<Node> breadthFirstSearch(Node node) {
 
-        List<Node> nodes = new LinkedList<>();
-
-        int depth = depth(node);
-
-        for (int i = 1; i <= depth; i++) {
-            List<Node> nodesOnDepth = nodesOnDepth(node, i);
-            nodes.addAll(nodesOnDepth);
-        }
-
-        return nodes;
-
-    }
-
-    public static List<Node> nodesOnDepth(Node node, int depth) {
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(node);
 
         List<Node> nodes = new LinkedList<>();
 
-        if (depth == 1) {
-            nodes.add(node);
-        } else {
-            if (node.getChildren() != null) {
-                for (Node child : node.getChildren()) {
-                    List<Node> current = nodesOnDepth(child, depth - 1);
-                    if (current != null) {
-                        nodes.addAll(current);
-                    }
-                }
-            } else {
-                return null;
+        while (!queue.isEmpty()) {
+            Node currentNode = queue.poll();
+            if (currentNode.getChildren() != null) {
+                queue.addAll(currentNode.getChildren());
             }
+            nodes.add(currentNode);
+
         }
 
         return nodes;
-
-    }
-
-    public static int depth(Node node) {
-
-        int currentDepth = 0;
-
-        if (node.getChildren() != null) {
-            for (Node child : node.getChildren()) {
-                currentDepth = Math.max(depth(child), currentDepth);
-            }
-        }
-
-        return currentDepth + 1;
 
     }
 }
