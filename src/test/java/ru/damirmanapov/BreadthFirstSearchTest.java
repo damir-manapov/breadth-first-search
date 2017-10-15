@@ -10,11 +10,12 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static ru.damirmanapov.BreadthFirstSearch.breadthFirstSearch;
+import static ru.damirmanapov.BreadthFirstSearch.depth;
+import static ru.damirmanapov.BreadthFirstSearch.nodesOnDepth;
 
 @Test
 public class BreadthFirstSearchTest {
-
-    private static final Logger logger = LoggerFactory.getLogger(BreadthFirstSearchTest.class);
 
     @Test
     public void testBreadthFirstSearch() {
@@ -37,20 +38,7 @@ public class BreadthFirstSearchTest {
         // Level 1
         Node n1 = new Node(1, Arrays.asList(n2, n3, n4));
 
-        breadthFirstSearch(n1);
-
-    }
-
-    private void breadthFirstSearch(Node node) {
-
-        int depth = depth(node);
-
-        for (int i = 1; i <= depth; i++) {
-            List<Node> nodesOnDepth = nodesOnDepth(node, i);
-            for (Node nodeOnDepth : nodesOnDepth) {
-                logger.info(nodeOnDepth.toString());
-            }
-        }
+        assertThat(breadthFirstSearch(n1), is(Arrays.asList(n1, n2, n3, n4, n5, n6, n7, n8, n9, n10)));
 
     }
 
@@ -79,29 +67,6 @@ public class BreadthFirstSearchTest {
         assertThat(nodesOnDepth(n1, 2), is(Arrays.asList(n2, n3, n4)));
         assertThat(nodesOnDepth(n1, 3), is(Arrays.asList(n5, n6, n7, n8)));
         assertThat(nodesOnDepth(n1, 4), is(Arrays.asList(n9, n10)));
-    }
-
-    private List<Node> nodesOnDepth(Node node, int depth) {
-
-        List<Node> values = new LinkedList<>();
-
-        if (depth == 1) {
-            values.add(node);
-        } else {
-            if (node.getChildren() != null) {
-                for (Node child : node.getChildren()) {
-                    List<Node> current = nodesOnDepth(child, depth - 1);
-                    if (current != null) {
-                        values.addAll(current);
-                    }
-                }
-            } else {
-                return null;
-            }
-        }
-
-        return values;
-
     }
 
     @Test
@@ -133,44 +98,6 @@ public class BreadthFirstSearchTest {
         assertThat(depth(n1_), is(1));
     }
 
-    private int depth(Node node) {
-
-        int currentDepth = 0;
-
-        if (node.getChildren() != null) {
-            for (Node child : node.getChildren()) {
-                currentDepth = Math.max(depth(child), currentDepth);
-            }
-        }
-
-        return currentDepth + 1;
-
-    }
-
-    class Node {
-        private int value;
-        private List<Node> children;
-
-        public Node(int value) {
-            this.value = value;
-        }
-
-        public Node(int value, List<Node> children) {
-            this.value = value;
-            this.children = children;
-        }
-
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "value=" + value +
-                    '}';
-        }
-
-        public List<Node> getChildren() {
-            return children;
-        }
-    }
 }
 
 

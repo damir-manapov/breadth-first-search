@@ -153,7 +153,7 @@
                             <transformers>
                                 <!-- add Main-Class to manifest file -->
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>ru.damirmanapov.App</mainClass>
+                                    <mainClass>ru.damirmanapov.BreadthFirstSearchTest</mainClass>
                                 </transformer>
                             </transformers>
 
@@ -194,7 +194,7 @@
                             <goal>java</goal>
                         </goals>
                         <configuration>
-                            <mainClass>ru.damirmanapov.App</mainClass>
+                            <mainClass>ru.damirmanapov.BreadthFirstSearchTest</mainClass>
                             <arguments>
                                 <argument>do-something</argument>
                             </arguments>
@@ -212,7 +212,7 @@
                             <goal>java</goal>
                         </goals>
                         <configuration>
-                            <mainClass>ru.damirmanapov.App</mainClass>
+                            <mainClass>ru.damirmanapov.BreadthFirstSearchTest</mainClass>
                             <arguments>
                                 <argument>do-something-else</argument>
                             </arguments>
